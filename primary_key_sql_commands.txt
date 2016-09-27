@@ -1,0 +1,4 @@
+mysql> ALTER TABLE curriculum ADD fk_courses bigint(20) NOT NULL;
+mysql> ALTER TABLE curriculum ADD fk_students bigint(20) NOT NULL;
+mysql> ALTER TABLE curriculum ADD CONSTRAINT FK_SConstraint FOREIGN KEY (fk_students) REFERENCES students (S_Id);
+mysql> ALTER TABLE curriculum ADD CONSTRAINT FK_CConstraint FOREIGN KEY (fk_courses) REFERENCES courses (C_Id);
