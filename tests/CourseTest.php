@@ -16,13 +16,13 @@
     {
         protected function tearDown()
         {
-            // Students::deleteAll();
+            Students::deleteAll();
             Course::deleteAll();
         }
 
 // ----Tests---- //
 
-        function test_GetName()
+        function test_getName()
         {
             //Arrange
             $name = "Intro to Owls";
@@ -34,7 +34,7 @@
             $this->assertEquals($name, $result);
         }
 
-        function test_GetClass()
+        function test_getClass()
         {
         //Arrange
         $name = "Intro to Owls";
@@ -46,7 +46,7 @@
         $this->assertEquals($class, $result);
         }
 
-        function test_GetId()
+        function test_getId()
         {
             //Arrange
             $id = 2;
@@ -60,7 +60,7 @@
             $this->assertEquals($expected_output, $result);
         }
 
-        function test_Save()
+        function test_save()
         {
             //Arrange
             $name = "Intro to Owls";
@@ -73,7 +73,7 @@
             $this->assertEquals($new_course, $result[0]);
         }
 
-        function test_GetAll()
+        function test_getAll()
         {
             //Arrange
             $name1 = "Intro to Owls";
@@ -91,7 +91,7 @@
             $this->assertEquals($expected_output, $result);
         }
 
-        function test_DeleteAll()
+        function test_deleteAll()
         {
             //Arrange
             $name1 = "Intro to Owls";
@@ -110,16 +110,16 @@
             $this->assertEquals($expected_output, $result);
         }
 
-        function test_DeleteOne()
+        function test_deleteOne()
         {
             //Arrange
             $name1 = "Intro to Owls";
-            $class1 = "OWL_101";
-            $new_course1 = new Course($name1, $class1);
             $name2 = "Intro to Jerky";
+            $class1 = "OWL_101";
             $class2 = "JRK_101";
-            $new_course2 = new Course($name2, $class2);
+            $new_course1 = new Course($name1, $class1);
             $new_course1->save();
+            $new_course2 = new Course($name2, $class2);
             $new_course2->save();
             $expected_output = [$new_course1];
             //Act
@@ -128,6 +128,27 @@
             //Assert
             $this->assertEquals($expected_output, $result);
         }
+
+        function test_update()
+
+        {
+            //arrange
+            $name = "Advanced Owlature";
+            $class = "OWL_301";
+            $new_course = new Course($name, $class);
+            $new_course->save();
+            $updated_name = "Intro to Owls";
+            $updated_course = "Owl_101";
+
+            //act
+            $new_course->update($updated_name, $updated_course);
+            $curriculum = Course::getAll();
+            $result = $curriculum[0]->getName();
+            $expected_output = $updated_name;
+            //assert
+            $this->assertEquals($expected_output, $result);
+        }
+
 
     }
 ?>

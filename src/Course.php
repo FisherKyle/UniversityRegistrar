@@ -67,12 +67,15 @@
 
         function deleteOne()
         {
-            $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM courses WHERE C_Id = {$this->getId()};");
         }
 
-        function update()
+        function update($new_name, $new_class)
         {
-
+            $GLOBALS['DB']->exec("UPDATE courses SET name = '{$new_name}' WHERE C_Id = {$this->getId()};");
+            $this->setName($new_name);
+            $GLOBALS['DB']->exec("UPDATE courses SET class = '{$new_class}' WHERE C_Id = {$this->getId()};");
+            $this->setClass($new_class);
         }
 
         static function find()
