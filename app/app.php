@@ -4,9 +4,9 @@
   * @backupStaticAttributes disabled
   */
 
-  require_once __DIR__."/../src/courses_students.php";
-  require_once __DIR__."/../src/courses.php";
-  require_once __DIR__."/../src/students.php";
+  require_once __DIR__."/../src/curriculum.php";
+  require_once __DIR__."/../src/Course.php";
+  require_once __DIR__."/../src/Student.php";
 
   $app = new Silex\Application();
 

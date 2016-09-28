@@ -39,24 +39,35 @@
             $this->class = (string) $new_class;
         }
 
-        function save()
-        {
-
-        }
-
         static function getAll()
         {
+            $returned_courses = $GLOBALS['DB']->query("SELECT * FROM courses;");
+            $courses = array();
+            foreach ($returned_courses as $course)
+            {
+                $name = $course['name'];
+                $class = $course['class'];
+                $id = $course['C_Id'];
+                $new_course = new Course($name, $class, $id);
+            array_push($courses, $new_course);
+            }
+            return $courses;
+        }
 
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO courses (name, class) VALUES ('{$this->getName()}', '{$this->getClass()}')");
+            $this->id = (int) $GLOBALS['DB']->lastInsertId();
         }
 
         static function deleteAll()
         {
-
+            $GLOBALS['DB']->exec("DELETE FROM courses;");
         }
 
         function deleteOne()
         {
-
+            $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
         }
 
         function update()
