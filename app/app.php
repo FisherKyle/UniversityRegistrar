@@ -32,6 +32,15 @@
     return $app['twig']->render('students_page.html.twig');
     });
 
+    $app->post("/courses_page", function() use($app){
+    $name=$_POST['name'];
+    $class=$_POST['class'];
+    $new_course=new Course($name, $class);
+    $new_course->save();
+    return $app['twig']->render('courses_page.html.twig', array('courses'=>Course::getAll()));
+
+    });
+
     return $app;
 
 
