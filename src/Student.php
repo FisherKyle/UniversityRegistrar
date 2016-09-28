@@ -14,6 +14,30 @@
 
 // ---- GET * SET ---- //
 
+        function addCourse($new_course)
+        {
+            $GLOBAL['DB']->exec("INSERT INTO curriculum (C_Id, S_Id) VALUES ({$new_course->getId()}, {$this->getId()});");
+        }
+
+        function getCourse()
+        {
+            $returned_courses = $GLOBALS['DB']->query("SELECT courses.* FROM students
+                JOIN curriculum ON (curriculum.S_Id = students.S_Id)
+                JOIN courses ON (courses.C_Id = curriculum.C_Id)
+                WHERE students.S_Id = {$this->getId()};");
+            $courses = array();
+            foreach($returned_courses as $course)
+            {
+                $name = $course['name'];
+                $class = $course['class'];
+                $id = $course['C_Id'];
+                $new_course = new Course($name, $class, $id);
+                array_push($courses, $new_course);
+            }
+            return $courses;
+        }
+
+
         function getName()
         {
             return $this->name;
@@ -47,7 +71,7 @@
             {
                 $name = $student['name'];
                 $enrollment = $student['enrollment'];
-                $id = $student['C_Id'];
+                $id = $student['S_Id'];
                 $new_student = new Student($name, $enrollment, $id);
             array_push($students, $new_student);
             }
@@ -67,14 +91,14 @@
 
         function deleteOne()
         {
-            $GLOBALS['DB']->exec("DELETE FROM students WHERE C_Id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM students WHERE S_Id = {$this->getId()};");
         }
 
         function update($new_name, $new_enrollment)
         {
-            $GLOBALS['DB']->exec("UPDATE students SET name = '{$new_name}' WHERE C_Id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE students SET name = '{$new_name}' WHERE S_Id = {$this->getId()};");
             $this->setName($new_name);
-            $GLOBALS['DB']->exec("UPDATE students SET enrollment = '{$new_enrollment}' WHERE C_Id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE students SET enrollment = '{$new_enrollment}' WHERE S_Id = {$this->getId()};");
             $this->setEnrollment($new_enrollment);
         }
 

@@ -34,14 +34,14 @@
             $this->assertEquals($name, $result);
         }
 
-        function test_getClass()
+        function test_getEnrollment()
         {
             //Arrange
             $name = "Brittanica Williams";
             $enrollment = "2015-11-04";
             $test_student = new Student($name, $enrollment);
             //Act
-            $result = $test_student->getClass();
+            $result = $test_student->getEnrollment();
             //Assert
             $this->assertEquals($enrollment, $result);
             }
@@ -147,6 +147,26 @@
             $expected_output = $updated_name;
             //assert
             $this->assertEquals($expected_output, $result);
+        }
+
+        function getCourses()
+        {
+            $query  = $GLOBALS['DB']->query("SELECT C_Id FROM curriculum WHERE S_Id = {$this->getId()};");
+            $C_Ids = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            $courses = array();
+            foreach($C_Ids as $id)
+            {
+                $C_Id = $id['C_Id'];
+                $result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE C_Id ={$C_Id};");
+                $returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
+
+                $name = $returned_course[0]['name'];
+                $id = $returned_course[0]['C_Id'];
+                $new_course = new Course($name, $C_Id);
+                array_push($courses, $new_course);
+            }
+            return $courses;
         }
 
     }

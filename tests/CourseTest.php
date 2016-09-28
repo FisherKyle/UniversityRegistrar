@@ -16,7 +16,7 @@
     {
         protected function tearDown()
         {
-            Students::deleteAll();
+            Student::deleteAll();
             Course::deleteAll();
         }
 
