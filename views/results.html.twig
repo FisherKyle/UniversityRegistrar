@@ -8,21 +8,30 @@
 
     <body>
         <div class="container jumbotron" id="big_box">
-            <form action="/results" method="get">
-                <div class="form-group has-primary">
+            <div class = "row">
 
-                    <input class="form-control" type="text" id="student" name="student"  placeholder="student">
+                <div class = "col-xs-6">
+                    <form action="/courses_page" method="get">
+                        <div class="form-group has-primary">
+                            <input class="form-control" type="text" id="course" name="course" class="form-control" placeholder="enter course">
+                        </div>
+                        <button type="submit" class="btn btn-success">add</button>
+                        <button type="submit" class="btn btn-warning">delete last</button>
+                        <button type="submit" class="btn btn-danger">delete all</button>
+                    </form>
+                </div>
 
-                    <input class="form-control" type="text" id="course" name="course" class="form-control" placeholder="classes">
+                <div class = "col-xs-6">
+                    <form action="/students_page" method="get">
+                        <div class="form-group has-primary">
+                            <input class="form-control" type="text" id="student" name="student" class="form-control" placeholder="enter student">
+                        </div>
+                        <button type="submit" class="btn btn-success">add</button>
+                        <button type="submit" class="btn btn-warning">delete last</button>
+                        <button type="submit" class="btn btn-danger">delete all</button>
+                    </form>
+                </div>
 
-                </div>
-                <div col-sm-4 id="left_col">
-                    <h5>registrar information stuff above:</h5>
-                </div>
-                <div col-sm-4 id="right_col">
-                  <button type="submit" class="btn btn-success">enter</button>
-                </div>
-            </form>
         </div>
     </body>
 </html>
