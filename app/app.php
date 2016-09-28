@@ -24,6 +24,14 @@
     return $app['twig']->render('home.html.twig');
     });
 
+    $app->get("/courses_page", function() use($app){
+    return $app['twig']->render('courses_page.html.twig');
+    });
+
+    $app->get("/students_page", function() use($app){
+    return $app['twig']->render('students_page.html.twig');
+    });
+
     return $app;
 
 
