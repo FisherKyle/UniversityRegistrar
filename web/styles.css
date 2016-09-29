@@ -62,3 +62,20 @@ input {
 #scan_word {
   max-width: 440px;
 }
+
+#remove {
+  color: #df1f1f;
+}
+
+#trash:hover {
+  text-decoration: underline
+}
+#trash {
+  color: #df1f1f;
+  font-size: 50%;
+}
+
+
+#edit {
+  font-size: 50%;
+}

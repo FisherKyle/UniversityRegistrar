@@ -70,6 +70,11 @@
             $GLOBALS['DB']->exec("DELETE FROM courses WHERE C_Id = {$this->getId()};");
         }
 
+        function deleteStudentFromCourse($student)
+        {
+            $GLOBALS['DB']->exec("DELETE FROM curriculum WHERE fk_courses = {$this->getId()} AND fk_students = {$student->getId()};");
+        }
+
         function update($new_name, $new_class)
         {
             $GLOBALS['DB']->exec("UPDATE courses SET name = '{$new_name}' WHERE C_Id = {$this->getId()};");
@@ -78,17 +83,41 @@
             $this->setClass($new_class);
         }
 
-        static function find()
+        function addStudent($new_student)
         {
-
+            $GLOBALS['DB']->exec("INSERT INTO curriculum (fk_courses, fk_students) VALUES ({$this->getId()}, {$new_student->getId()});");
         }
 
-        function getStudent()
+        function getStudents()
         {
-
+            $returned_students = $GLOBALS['DB']->query("SELECT students.* FROM courses
+                JOIN curriculum ON (curriculum.fk_courses = courses.C_Id)
+                JOIN students ON (students.S_Id = curriculum.fk_students)
+                WHERE courses.C_Id = {$this->getId()};");
+            $students = array();
+            foreach($returned_students as $student)
+            {
+                $name = $student['name'];
+                $enrollment = $student['enrollment'];
+                $id = $student['S_Id'];
+                $new_student = new Student($name, $enrollment, $id);
+                array_push($students, $new_student);
+            }
+            return $students;
         }
 
-
+        static function find($search_id)
+        {
+            $found_course = null;
+            $courses = Course::getAll();
+            foreach($courses as $course){
+                $C_Id = $course->getId();
+                if($C_Id == $search_id){
+                    $found_course = $course;
+                }
+            }
+            return $found_course;
+        }
 
     }
 ?>

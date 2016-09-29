@@ -2,24 +2,39 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="styles.css" rel="stylesheet" type="text/css">
+        <link href="/styles.css" rel="stylesheet" type="text/css">
         <title>Welcome to the Regitrar's Office</title>
     </head>
 
     <body>
-        <div class="container jumbotron" id="big_box">
-            <div class = "row">
-                <h2>students:</h2>
-                <h3>click on a student to view their details</h3>
+      <div class="container jumbotron" id="big_box">
+        <h2>{{course.getName}}
+          <a href="/students/{{ course.getId }}/remove">
+            <span id="trash" class="glyphicon glyphicon-trash"></span>
+          </a>
+          <a href="/students/{{ course.getId }}/edit">
+            <span id="edit" class="glyphicon glyphicon-edit"></span>
+          </a>
+        </h2>
+        <h2>{{course.getClass}}</h2>
 
-                <div class = "col-xs-6">
-                    <h4>students //</h4>
-                </div>
+        <form action="/students/{{ course.getID }}/add_student" method="post">
+            <div class="form-group has-primary">
+                <label for = "course">add following student to class:</label>
+                <select type="select" id="student_select" name="student_select" class="form-control" required>
+                  {% for student in students %}
+                    <option value="{{student.getId}}">{{student.getName}}</option>
+                  {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">add student</button>
+        </form>
+        <h5>enrolled students:</h5>
+        <ul>
+          {% for student in course.getStudents %}
+            <li> {{ student.getName }}<a href="/courses/{{ course.getId }}/remove_student"> <span id="remove" class="glyphicon glyphicon-remove"></span></a></li>
+          {% endfor %}
+        </ul>
 
-                <div class = "col-xs-6">
-                    <h4>details //</h4>
-                </div>
-
-        </div>
     </body>
 </html>

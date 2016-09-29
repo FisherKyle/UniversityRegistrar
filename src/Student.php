@@ -16,7 +16,7 @@
 
         function addCourse($new_course)
         {
-            $GLOBAL['DB']->exec("INSERT INTO curriculum (C_Id, S_Id) VALUES ({$new_course->getId()}, {$this->getId()});");
+            $GLOBAL['DB']->exec("INSERT INTO curriculum (fk_courses, fk_students) VALUES ({$new_course->getId()}, {$this->getId()});");
         }
 
         function getCourse()
@@ -102,15 +102,19 @@
             $this->setEnrollment($new_enrollment);
         }
 
-        static function find()
+        static function find($search_id)
         {
-
+            $found_student = null;
+            $students = Student::getAll();
+            foreach($students as $student){
+                $S_Id = $student->getId();
+                if($S_id == $search_id){
+                    $found_student = $student;
+                }
+            }
+            return $found_student;
         }
 
-        function getStudent()
-        {
-
-        }
 
 
 
